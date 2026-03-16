@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registered Students</title>
+
+<style>
+table{
+border-collapse: collapse;
+width: 60%;
+}
+
+th,td{
+padding:10px;
+text-align:center;
+}
+
+input{
+padding:8px;
+margin-bottom:15px;
+width:250px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Registered Students</h2>
+
+<input type="text" id="search" placeholder="Search by name, email or event" onkeyup="searchTable()">
+
+<br><br>
+
+<table border="1">
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Email</th>
+<th>VTU Number</th>
+<th>Department</th>
+<th>Event</th>
+</tr>
+</thead>
+
+<tbody id="data"></tbody>
+
+</table>
+
+<script>
+
+/* Load registration data */
+
+fetch("/registrations")
+.then(res => res.json())
+.then(data => {
+
+let rows = "";
+
+data.forEach(user => {
+
+rows += `
+<tr>
+<td>${user.id}</td>
+<td>${user.name}</td>
+<td>${user.email}</td>
+<td>${user.vtu_number}</td>
+<td>${user.department}</td>
+<td>${user.event_name}</td>
+</tr>
+`;
+
+});
+
+document.getElementById("data").innerHTML = rows;
+
+});
+
+
+/* Search Function */
+
+function searchTable(){
+
+let input = document.getElementById("search").value.toLowerCase();
+
+let rows = document.querySelectorAll("#data tr");
+
+rows.forEach(row => {
+
+let text = row.innerText.toLowerCase();
+
+row.style.display = text.includes(input) ? "" : "none";
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

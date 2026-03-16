@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registration Success</title>
+
+<style>
+
+body{
+background-image: url("123.jpg"); /* change to your image path */
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+min-height:100vh;
+text-align:center;
+font-family: Arial;
+color:#ffffffe4;
+}
+
+h2{
+font-size:40px;
+margin-top:150px;
+text-shadow:2px 2px 5px black;
+}
+
+button{
+font-size:18px;
+padding:10px 20px;
+border:none;
+border-radius:5px;
+background:#007BFF;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2 id="msg"></h2>
+
+<br><br>
+
+<a href="index.html">
+<button>Go to Home Page</button>
+</a>
+
+<script>
+
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name");
+
+document.getElementById("msg").innerText =
+"Event Registration Successful, " + name + "!";
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Event Registration</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h2>Event Registration</h2>
+
+<form id="eventForm">
+
+<input type="text" id="name" placeholder="Student Name" required>
+
+<input type="email" id="email" placeholder="Email" required>
+
+<select id="event_name">
+
+<option>Hackathon</option>
+<option>Tantraz</option>
+<option>Technical Quiz</option>
+
+</select>
+
+<button type="submit">Register</button>
+
+</form>
+
+<h3>Registered Students</h3>
+
+<table border="1">
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Event</th>
+</tr>
+</thead>
+
+<tbody id="data"></tbody>
+
+</table>
+
+<script>
+
+document.getElementById("eventForm").addEventListener("submit",function(e){
+
+e.preventDefault()
+
+fetch("/event-register",{
+
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+name:document.getElementById("name").value,
+email:document.getElementById("email").value,
+event_name:document.getElementById("event_name").value
+
+})
+
+})
+
+.then(res=>res.text())
+.then(data=>{
+
+alert(data)
+loadData()
+
+})
+
+})
+
+function loadData(){
+
+fetch("/students")
+
+.then(res=>res.json())
+
+.then(data=>{
+
+let rows=""
+
+data.forEach(s=>{
+
+rows+=`
+<tr>
+<td>${s.name}</td>
+<td>${s.email}</td>
+<td>${s.event_name}</td>
+</tr>
+`
+
+})
+
+document.getElementById("data").innerHTML=rows
+
+})
+
+}
+
+loadData()
+
+</script>
+
+</body>
+</html>
